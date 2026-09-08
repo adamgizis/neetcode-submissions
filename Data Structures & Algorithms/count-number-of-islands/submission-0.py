@@ -1,0 +1,40 @@
+class Solution:
+    def numIslands(self, grid: List[List[str]]) -> int:
+        visited = set()
+        stack = []
+        num_islands = 0
+
+        def valid_moves(pos):
+            r,c = pos
+            result = []
+            if r + 1 < len(grid):
+                result.append((r+1, c))
+            if r-1 >= 0:
+                result.append((r-1,c))
+            if c + 1 < len(grid[0]):
+                result.append((r,c+1))
+            if c-1 >= 0:
+                result.append((r,c-1))
+            return result
+
+
+        for i in range(len(grid)):
+            for j in range(len(grid[0])):
+                if (i,j) not in visited and grid[i][j] == "1":
+                    num_islands+=1
+                    visited.add((i,j))
+                    stack = [(i,j)]
+                    while stack != []:
+                        r,c = stack.pop()
+                        print(f"start {r} {c}" )
+                        for pos in valid_moves((r,c)):
+                            x,y = pos
+                            if pos not in visited and grid[x][y] == "1":
+                                print(x,y)
+                                visited.add(pos)
+                                stack.append(pos)
+
+        return num_islands
+
+
+
